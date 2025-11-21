@@ -8,21 +8,8 @@ Option Explicit
 '              and data validation for segment tabs
 '==============================================================================
 
-' Structure to hold pack information
-Type PackInfo
-    PackName As String
-    PackCode As String
-    ColumnIndex As Long
-End Type
-
-' Structure to hold column analysis results
-Type ColumnAnalysis
-    ColumnIndex As Long
-    IsValid As Boolean              ' True if column should be included (Row 6 is empty)
-    MarkerText As String            ' Text found in Row 6 (if any)
-    PackName As String              ' Pack name from Row 8
-    PackCode As String              ' Pack code from Row 8
-End Type
+' NOTE: PackInfo and ColumnAnalysis are now Class modules
+' See clsPackInfo.cls and clsColumnAnalysis.cls
 
 '==================== ROW 6 ANALYSIS ====================
 
@@ -34,9 +21,12 @@ Public Function AnalyzeRow6(ByVal ws As Worksheet, ByVal startCol As Long, ByVal
 
     Dim results As New Collection
     Dim colIdx As Long
-    Dim analysis As ColumnAnalysis
+    Dim analysis As clsColumnAnalysis
 
     For colIdx = startCol To endCol
+        ' Create new analysis object for this column
+        Set analysis = New clsColumnAnalysis
+
         ' Initialize analysis structure
         analysis.ColumnIndex = colIdx
         analysis.MarkerText = SafeTrim(ws.Cells(ROW_MARKER, colIdx).Value)
