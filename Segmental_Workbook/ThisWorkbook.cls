@@ -1,0 +1,176 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "ThisWorkbook"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+Option Explicit
+
+'==============================================================================
+' CLASS: ThisWorkbook
+' PURPOSE: Handle workbook-level events and initialization
+' DESCRIPTION: Manages workbook open, close, and other lifecycle events
+'==============================================================================
+
+'==================== WORKBOOK OPEN EVENT ====================
+
+Private Sub Workbook_Open()
+    On Error Resume Next
+
+    ' Display welcome message
+    Call ShowWelcomeMessage
+
+    ' Initialize environment
+    Call InitializeEnvironment
+
+End Sub
+
+' Show welcome message on workbook open
+Private Sub ShowWelcomeMessage()
+    On Error Resume Next
+
+    Dim message As String
+
+    message = "Welcome to " & TOOL_NAME & vbCrLf
+    message = message & "Version: " & TOOL_VERSION & vbCrLf & vbCrLf
+
+    message = message & "To get started:" & vbCrLf
+    message = message & "  1. Open your segment report workbook" & vbCrLf
+    message = message & "  2. Go to Developer tab > Macros" & vbCrLf
+    message = message & "  3. Run 'RunSegmentalAnalysis'" & vbCrLf & vbCrLf
+
+    message = message & "Or use the Quick Access menu in the ribbon."
+
+    ' Only show on first open (check if Instructions sheet exists)
+    Dim ws As Worksheet
+    Set ws = Nothing
+    Set ws = ThisWorkbook.Worksheets("Instructions")
+
+    If ws Is Nothing Then
+        ' First time opening - show welcome
+        MsgBox message, vbInformation, "Welcome to " & TOOL_NAME
+    End If
+
+End Sub
+
+' Initialize the environment
+Private Sub InitializeEnvironment()
+    On Error Resume Next
+
+    ' Log the opening
+    LogMessage "Workbook opened: " & ThisWorkbook.Name
+    LogMessage "Tool version: " & GetToolVersion()
+
+    ' Initialize global collections
+    Call InitializeGlobalCollections
+
+End Sub
+
+'==================== WORKBOOK BEFORE CLOSE EVENT ====================
+
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    On Error Resume Next
+
+    ' Clean up global collections
+    Call CleanupGlobalCollections
+
+    ' Log the closing
+    LogMessage "Workbook closing: " & ThisWorkbook.Name
+
+End Sub
+
+'==================== WORKBOOK BEFORE SAVE EVENT ====================
+
+Private Sub Workbook_BeforeSave(ByVal SaveAsUI As Boolean, Cancel As Boolean)
+    On Error Resume Next
+
+    ' Update metadata if PowerBI_Metadata sheet exists
+    Dim ws As Worksheet
+    Set ws = Nothing
+    Set ws = ThisWorkbook.Worksheets(PBI_METADATA_SHEET)
+
+    If Not ws Is Nothing Then
+        ' Update last saved timestamp
+        Dim lastRow As Long
+        lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
+
+        ' Find or add "Last Saved" row
+        Dim rowIdx As Long
+        Dim found As Boolean
+        found = False
+
+        For rowIdx = 2 To lastRow
+            If ws.Cells(rowIdx, 1).Value = "Last Saved" Then
+                ws.Cells(rowIdx, 2).Value = Now
+                found = True
+                Exit For
+            End If
+        Next rowIdx
+
+        If Not found Then
+            lastRow = lastRow + 1
+            ws.Cells(lastRow, 1).Value = "Last Saved"
+            ws.Cells(lastRow, 2).Value = Now
+        End If
+    End If
+
+    LogMessage "Workbook saved: " & ThisWorkbook.Name
+
+End Sub
+
+'==================== SHEET ACTIVATION EVENT ====================
+
+Private Sub Workbook_SheetActivate(ByVal Sh As Object)
+    On Error Resume Next
+
+    ' Log sheet activation for debugging
+    LogMessage "Sheet activated: " & Sh.Name
+
+End Sub
+
+'==================== RIBBON CUSTOMIZATION ====================
+
+' This section would be used to customize the ribbon
+' Requires RibbonX XML configuration which is beyond VBA scope
+' Users can add buttons to Quick Access Toolbar manually
+
+'==================== HELPER FUNCTIONS ====================
+
+' Create ribbon menu (placeholder for future enhancement)
+Private Sub CreateRibbonMenu()
+    ' This would require Custom UI XML in the workbook
+    ' For now, users will access macros through Developer > Macros
+End Sub
+
+'==================== QUICK ACCESS PROCEDURES ====================
+
+' These procedures are designed to be added to Quick Access Toolbar
+' Users can right-click on the procedures and add to QAT
+
+Public Sub QAT_RunAnalysis()
+    ' Quick Access: Run full segmental analysis
+    Call ModMain.RunSegmentalAnalysis
+End Sub
+
+Public Sub QAT_ShowDashboard()
+    ' Quick Access: Show interactive dashboard
+    Call ModInteractiveDashboard.ShowInteractiveDashboard
+End Sub
+
+Public Sub QAT_ApplyThresholds()
+    ' Quick Access: Apply threshold scoping
+    Call ModInteractiveDashboard.ApplyThresholdScoping
+End Sub
+
+Public Sub QAT_RefreshData()
+    ' Quick Access: Refresh all data
+    Call ModMain.RefreshAllData
+End Sub
+
+Public Sub QAT_ExportPowerBI()
+    ' Quick Access: Export to Power BI
+    Call ModMain.ExportToPowerBI
+End Sub
