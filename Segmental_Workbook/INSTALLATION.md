@@ -87,11 +87,15 @@ You need to import all the VBA module files and class modules provided.
 
 #### For the ThisWorkbook class module:
 
-1. In the VBA Editor, double-click **ThisWorkbook** in the Project Explorer
-2. Delete all existing code in the window
-3. Open `ThisWorkbook.cls` in a text editor
-4. Copy all the code (starting after the VERSION/BEGIN/END section)
+**IMPORTANT**: Do NOT import ThisWorkbook.cls as a file! Follow these steps instead:
+
+1. In the VBA Editor, double-click **ThisWorkbook** in the Project Explorer (under Microsoft Excel Objects)
+2. Delete all existing code in the ThisWorkbook code window
+3. Open `ThisWorkbook_CODE_ONLY.txt` in a text editor
+4. Copy **ALL** the code from that file
 5. Paste it into the ThisWorkbook code window
+
+> **Why not import?** The .cls file contains VBA metadata headers (VERSION, BEGIN, END, Attribute) that Excel generates automatically. Importing or copying these lines causes "Invalid outside procedure" errors. Use the ThisWorkbook_CODE_ONLY.txt file instead, which contains only the actual VBA code.
 
 ### Step 5: Verify Installation
 
@@ -177,6 +181,22 @@ Before proceeding to use the tool, verify:
 - [x] No compile errors (in VBA Editor, click **Debug** > **Compile VBAProject**)
 
 ## Troubleshooting Installation Issues
+
+### Issue: "Invalid outside procedure" in ThisWorkbook
+
+**Cause**: You copied the VERSION/BEGIN/END/Attribute header lines from ThisWorkbook.cls
+
+**Solution**:
+1. Open VBA Editor (Alt + F11)
+2. Double-click **ThisWorkbook** in the Project Explorer
+3. Press Ctrl+A to select all code
+4. Press Delete to clear everything
+5. Open `ThisWorkbook_CODE_ONLY.txt` (not .cls!)
+6. Copy all code from that file
+7. Paste into ThisWorkbook code window
+8. Save and compile (Debug > Compile VBAProject)
+
+> **Key Point**: Never copy lines starting with "VERSION", "BEGIN", "END", "Attribute VB_" - these are metadata that Excel generates automatically!
 
 ### Issue: "Compile error: Can't find project or library"
 
