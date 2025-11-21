@@ -74,6 +74,8 @@ You need to import all the VBA module files and class modules provided.
 
 #### For each .cls file (Class Modules):
 
+**IMPORTANT**: Use the _IMPORT.cls versions for importing!
+
 1. In the VBA Editor (Alt + F11)
 2. Right-click on **VBAProject** (your workbook name)
 3. Select **Import File...**
@@ -82,8 +84,10 @@ You need to import all the VBA module files and class modules provided.
 
 **Import these .cls files:**
 
-1. `clsColumnAnalysis.cls`
-2. `clsPackInfo.cls`
+1. `clsColumnAnalysis_IMPORT.cls` ⭐ (Use this version, not the regular .cls)
+2. `clsPackInfo_IMPORT.cls` ⭐ (Use this version, not the regular .cls)
+
+> **Why _IMPORT versions?** The _IMPORT.cls files have `VB_Creatable = True` which allows the classes to be instantiated with `New` and stored in Collections. The regular .cls files were generated with VB_Creatable = False which causes the compile error.
 
 #### For the ThisWorkbook class module:
 
@@ -181,6 +185,26 @@ Before proceeding to use the tool, verify:
 - [x] No compile errors (in VBA Editor, click **Debug** > **Compile VBAProject**)
 
 ## Troubleshooting Installation Issues
+
+### Issue: "Only user-defined types defined in public object modules..." error
+
+**Cause**: You imported the wrong .cls files (without VB_Creatable = True)
+
+**Solution**:
+1. Open VBA Editor (Alt + F11)
+2. In Project Explorer, expand **Class Modules**
+3. Right-click on **clsColumnAnalysis** and select **Remove clsColumnAnalysis**
+4. Click **No** when asked to export
+5. Right-click on **clsPackInfo** and select **Remove clsPackInfo**
+6. Click **No** when asked to export
+7. Now import the correct files:
+   - Right-click on **VBAProject** > **Import File...**
+   - Select `clsColumnAnalysis_IMPORT.cls` and click Open
+   - Right-click on **VBAProject** > **Import File...**
+   - Select `clsPackInfo_IMPORT.cls` and click Open
+8. Compile (Debug > Compile VBAProject)
+
+> **The Fix**: The _IMPORT.cls files have `Attribute VB_Creatable = True` which allows `Set obj = New ClassName` to work properly!
 
 ### Issue: "Invalid outside procedure" in ThisWorkbook
 
