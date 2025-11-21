@@ -66,28 +66,35 @@ You need to import all the VBA module files and class modules provided.
 
 1. `ModConfig.bas`
 2. `ModTabCategorization.bas`
-3. `ModDataProcessing.bas`
-4. `ModTableGeneration.bas`
+3. `ModDataProcessing_v2.bas` ⭐ (Use v2 - no class modules needed!)
+4. `ModTableGeneration_v2.bas` ⭐ (Use v2 - works with v2 data processing)
 5. `ModPowerBIIntegration.bas`
 6. `ModInteractiveDashboard.bas`
 7. `ModMain.bas`
 
-#### For each .cls file (Class Modules):
+> **Important**: Use the _v2.bas versions for ModDataProcessing and ModTableGeneration. These versions don't require class modules and avoid all the VB_Creatable issues!
 
-**IMPORTANT**: Use the _IMPORT.cls versions for importing!
+#### For Class Modules:
+
+**GREAT NEWS**: If you're using the _v2.bas versions above, **you don't need to import any class modules!**
+
+The v2 versions use dictionaries and arrays instead of custom classes, which avoids all the VB_Creatable compilation issues.
+
+✅ **Skip the class module step and proceed to ThisWorkbook!**
+
+<details>
+<summary>🔍 (Optional) Only if you want to use the original v1 versions...</summary>
+
+If you really want to use the original ModDataProcessing.bas and ModTableGeneration.bas (not recommended), you'll need these class modules:
 
 1. In the VBA Editor (Alt + F11)
 2. Right-click on **VBAProject** (your workbook name)
 3. Select **Import File...**
-4. Navigate to the folder containing the .cls files
-5. Select the file and click **Open**
+4. Select `clsColumnAnalysis_IMPORT.cls` and click Open
+5. Repeat for `clsPackInfo_IMPORT.cls`
 
-**Import these .cls files:**
-
-1. `clsColumnAnalysis_IMPORT.cls` ⭐ (Use this version, not the regular .cls)
-2. `clsPackInfo_IMPORT.cls` ⭐ (Use this version, not the regular .cls)
-
-> **Why _IMPORT versions?** The _IMPORT.cls files have `VB_Creatable = True` which allows the classes to be instantiated with `New` and stored in Collections. The regular .cls files were generated with VB_Creatable = False which causes the compile error.
+But **we recommend using the v2 versions** which don't need these!
+</details>
 
 #### For the ThisWorkbook class module:
 
@@ -105,18 +112,18 @@ You need to import all the VBA module files and class modules provided.
 
 1. In the VBA Editor, you should see all modules listed under **Modules**:
    - ModConfig
-   - ModDataProcessing
+   - ModDataProcessing (if using v2, no class modules needed!)
    - ModInteractiveDashboard
    - ModMain
    - ModPowerBIIntegration
    - ModTabCategorization
    - ModTableGeneration
 
-2. You should see class modules listed under **Class Modules**:
-   - clsColumnAnalysis
-   - clsPackInfo
+2. You should see **ThisWorkbook** under **Microsoft Excel Objects** with your custom code
 
-3. You should see **ThisWorkbook** under **Microsoft Excel Objects**
+3. **If using v2 versions**: You should NOT have any Class Modules (and that's perfect!)
+
+4. **If using v1 versions**: You would see clsColumnAnalysis and clsPackInfo under Class Modules
 
 ### Step 6: Enable Macros
 
