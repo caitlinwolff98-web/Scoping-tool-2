@@ -71,6 +71,7 @@ You need to import all the VBA module files and class modules provided.
 5. `ModPowerBIIntegration.bas`
 6. `ModInteractiveDashboard.bas`
 7. `ModMain.bas`
+8. `ModStartup.bas` ⭐ (Creates START HERE sheet with buttons!)
 
 > **Important**: Use the _v2.bas versions for ModDataProcessing and ModTableGeneration. These versions don't require class modules and avoid all the VB_Creatable issues!
 
@@ -116,6 +117,7 @@ But **we recommend using the v2 versions** which don't need these!
    - ModInteractiveDashboard
    - ModMain
    - ModPowerBIIntegration
+   - ModStartup ⭐ (NEW!)
    - ModTabCategorization
    - ModTableGeneration
 
@@ -124,6 +126,8 @@ But **we recommend using the v2 versions** which don't need these!
 3. **If using v2 versions**: You should NOT have any Class Modules (and that's perfect!)
 
 4. **If using v1 versions**: You would see clsColumnAnalysis and clsPackInfo under Class Modules
+
+5. **When you open the workbook**: A "START HERE" sheet will automatically be created with buttons!
 
 ### Step 6: Enable Macros
 

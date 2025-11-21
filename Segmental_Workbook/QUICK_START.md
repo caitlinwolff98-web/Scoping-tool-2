@@ -4,7 +4,7 @@
 
 ### Files You Need (Latest v2 - Recommended)
 
-**✅ Import these 7 modules** (Right-click VBAProject > Import File):
+**✅ Import these 8 modules** (Right-click VBAProject > Import File):
 
 1. `ModConfig.bas`
 2. `ModTabCategorization.bas`
@@ -13,6 +13,7 @@
 5. `ModPowerBIIntegration.bas`
 6. `ModInteractiveDashboard.bas`
 7. `ModMain.bas`
+8. `ModStartup.bas` ⭐ **Creates START button!**
 
 **✅ Copy code for ThisWorkbook**:
 - Open `ThisWorkbook_CODE_ONLY.txt`

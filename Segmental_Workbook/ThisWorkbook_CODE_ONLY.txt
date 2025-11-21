@@ -11,11 +11,28 @@ Option Explicit
 Private Sub Workbook_Open()
     On Error Resume Next
 
+    ' Check if START HERE sheet exists, if not create it
+    Dim ws As Worksheet
+    Set ws = Nothing
+    On Error Resume Next
+    Set ws = ThisWorkbook.Worksheets("START HERE")
+    On Error GoTo 0
+
+    If ws Is Nothing Then
+        ' First time opening - create startup sheet
+        Call ModStartup.CreateStartupSheet
+    End If
+
     ' Display welcome message
     Call ShowWelcomeMessage
 
     ' Initialize environment
     Call InitializeEnvironment
+
+    ' Activate START HERE sheet
+    On Error Resume Next
+    ThisWorkbook.Worksheets("START HERE").Activate
+    On Error GoTo 0
 
 End Sub
 
