@@ -134,6 +134,16 @@ The tool consists of the following VBA modules:
    - Initialization logic
    - Quick Access Toolbar procedures
 
+### VBA Class Modules
+
+9. **clsColumnAnalysis.cls**
+   - Column analysis result structure
+   - Used by Row 6 analysis
+
+10. **clsPackInfo.cls**
+    - Pack information structure
+    - Used by pack processing
+
 ## Workflow
 
 ### Complete Analysis Workflow

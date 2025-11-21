@@ -52,9 +52,9 @@ The Developer tab is required to import VBA modules.
 
 ### Step 4: Import VBA Modules
 
-You need to import all the VBA module files provided.
+You need to import all the VBA module files and class modules provided.
 
-#### For each .bas file:
+#### For each .bas file (Standard Modules):
 
 1. In the VBA Editor (Alt + F11)
 2. Right-click on **VBAProject** (your workbook name)
@@ -62,7 +62,7 @@ You need to import all the VBA module files provided.
 4. Navigate to the folder containing the .bas files
 5. Select the file and click **Open**
 
-**Import these files in order:**
+**Import these .bas files in order:**
 
 1. `ModConfig.bas`
 2. `ModTabCategorization.bas`
@@ -71,6 +71,19 @@ You need to import all the VBA module files provided.
 5. `ModPowerBIIntegration.bas`
 6. `ModInteractiveDashboard.bas`
 7. `ModMain.bas`
+
+#### For each .cls file (Class Modules):
+
+1. In the VBA Editor (Alt + F11)
+2. Right-click on **VBAProject** (your workbook name)
+3. Select **Import File...**
+4. Navigate to the folder containing the .cls files
+5. Select the file and click **Open**
+
+**Import these .cls files:**
+
+1. `clsColumnAnalysis.cls`
+2. `clsPackInfo.cls`
 
 #### For the ThisWorkbook class module:
 
@@ -91,7 +104,11 @@ You need to import all the VBA module files provided.
    - ModTabCategorization
    - ModTableGeneration
 
-2. You should see **ThisWorkbook** under **Microsoft Excel Objects**
+2. You should see class modules listed under **Class Modules**:
+   - clsColumnAnalysis
+   - clsPackInfo
+
+3. You should see **ThisWorkbook** under **Microsoft Excel Objects**
 
 ### Step 6: Enable Macros
 
